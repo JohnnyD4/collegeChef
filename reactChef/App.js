@@ -1,11 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
 export default class App extends React.Component {
   componentDidMount() {
     console.log("obj");
-    return fetch("https://api.edamam.com/search?q=chicken&app_id=63f8bc89&app_key=6102576183eb6fec6ef9ac523922c97c&from=1&to=1")
-    .then((response) => console.log("body", response["_bodyText"]))
+    return fetch("https://api.edamam.com/search?q=chicken,rice&app_id=63f8bc89&app_key=6102576183eb6fec6ef9ac523922c97c&from=0&to=1")
+    
+    .then(function(response){
+        var res = JSON.parse(response._bodyText);
+        console.log("body", res.hits[0].recipe.image);
+    })
   }
 
   render() {
@@ -14,6 +18,12 @@ export default class App extends React.Component {
         <Text>Open up App.js to start working on your app!</Text>
         <Text>Changes you make will aufdgdfgtomatically reload.</Text>
         <Text>Shake your phone to open the developer menu.</Text>
+          <Image source={{
+              uri: 'https://www.edamam.com/web-img/42f/42f1805b2273113c029b41adadd36847.jpg'
+              }
+              
+            }
+            style={{width: 400, height: 400}} />
       </View>
     );
   }
